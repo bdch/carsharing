@@ -1,6 +1,9 @@
 package com.carsharing.carsharing.controller;
 
 import com.carsharing.carsharing.repository.CarRepository;
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,13 +16,16 @@ import java.util.List;
 @RequestMapping("/api/v1/cars")
 public class CarController{
 
+
     @Autowired
     public CarService carService;
 
     //Get all cars
     @GetMapping
     public List<Car> getAllCars(){
-        return carService.getAllCars();
+        List<Car> cars = carService.getAllCars();
+        System.out.println("Cars: " + cars); // Logging der Antwort
+        return cars;
     }
 
     //Get car by id
@@ -30,26 +36,35 @@ public class CarController{
 
     //add a new car
     @PostMapping
-    public Car addCar(@RequestBody Car car){
-        return carService.addCar(car);
+    public ResponseEntity<Car> addCar(@RequestBody Car car){
+        Car savedCar = carService.addCar(car);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedCar);
     }
 
     //update a car id
     @PutMapping("/{id}")
-    public Car updateCar(@PathVariable Long id, @RequestBody Car carDetails){
+    public ResponseEntity<Car> updateCar(@PathVariable Long id, @RequestBody Car carDetails){
         Car car = carService.getCarById(id);
         if(car != null) {
             car.setBrand(carDetails.getBrand());
             car.setModel(carDetails.getModel());
             car.setLicensePlate(carDetails.getLicensePlate());
-            return carService.saveCar(car);
+
+            // Speichern und Rückgabe des aktualisierten Autos
+            Car updatedCar = carService.saveCar(car);
+            return ResponseEntity.ok(updatedCar); // Gibt 200 OK zurück
         }
-        throw new NullPointerException("Car not found");
+        return ResponseEntity.notFound().build(); // Gibt 404 Not Found zurück
     }
 
     //delete a car by id
     @DeleteMapping("/{id}")
-    public void deleteCar(@PathVariable Long id){
-        carService.deleteCar(id);
+    public ResponseEntity<Void> deleteCar(@PathVariable Long id){
+        try {
+            carService.deleteCar(id);
+            return ResponseEntity.noContent().build(); // 204 No Content
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build(); // 404 Not Found
+        }
     }
 }

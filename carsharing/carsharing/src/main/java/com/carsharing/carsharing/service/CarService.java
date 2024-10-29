@@ -4,10 +4,12 @@ import com.carsharing.carsharing.Mapper.CarMapper;
 import com.carsharing.carsharing.model.Car;
 import com.carsharing.carsharing.repository.BookingRepository;
 import com.carsharing.carsharing.repository.CarRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.carsharing.carsharing.dto.CarDTO;
 
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.List;
 
@@ -31,7 +33,7 @@ import java.util.List;
         }
 
         public Car getCarById(Long id) {
-            return carRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Car not found with id: " + id));
+            return carRepository.findById(id).orElse(null);
         }
 
         public Car saveCar(Car car) {
@@ -39,10 +41,13 @@ import java.util.List;
         }
 
         public void deleteCar(Long id) {
-            if (!carRepository.existsById(id)) {
-                throw new ResourceNotFoundException("Car not found with id: " + id);
+            Optional<Car> optionalCar = carRepository.findById(id);
+            if (optionalCar.isPresent()) {
+                carRepository.delete(optionalCar.get());
+                System.out.println("Car deleted: " + optionalCar.get());
+            } else {
+                throw new EntityNotFoundException("Car not found");
             }
-            carRepository.deleteById(id);
         }
 
         public Car addCar(Car car) {return carRepository.save(car);}

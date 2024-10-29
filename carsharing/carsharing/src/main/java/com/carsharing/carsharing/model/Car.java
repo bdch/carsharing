@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
     @Table(name = "cars")
@@ -14,6 +15,7 @@ import java.util.List;
         private Long id;
 
         @OneToMany(mappedBy = "car", cascade = CascadeType.ALL, orphanRemoval = true)
+        @JsonIgnore
         private List<Booking> bookings = new ArrayList<>();
 
 

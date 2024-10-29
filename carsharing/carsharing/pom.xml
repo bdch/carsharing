@@ -27,9 +27,9 @@
 		<url/>
 	</scm>
 	<properties>
-		<java.version>21</java.version>
-		<maven.compiler.source>21</maven.compiler.source> <!-- Java-Quellversion -->
-		<maven.compiler.target>21</maven.compiler.target> <!-- Java-Zielversion -->
+		<java.version>17</java.version>
+		<maven.compiler.source>17</maven.compiler.source> <!-- Java-Quellversion -->
+		<maven.compiler.target>17</maven.compiler.target> <!-- Java-Zielversion -->
 	</properties>
 	<dependencies>
 		<!-- Spring Boot Starter for WebApp-->
@@ -73,12 +73,20 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.graphql-java-kickstart</groupId>
-			<artifactId>graphiql-spring-boot-starter</artifactId>
-			<version>14.0.0</version> <!-- Überprüfe auf die neueste Version -->
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>2.2.224</version>
+			<scope>compile</scope>
 		</dependency>
-    </dependencies>
 
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>testcontainers</artifactId>
+			<version>1.18.3</version> <!-- Überprüfe die neueste Version -->
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
 	<build>
 		<plugins>
 			<!-- Spring Boot Plugin für die Ausführung -->
