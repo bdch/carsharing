@@ -1,8 +1,6 @@
 package com.carsharing.carsharing.model;
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
-
 @Entity
 public class Booking {
 
@@ -10,12 +8,12 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "car_id", nullable = false)
     private Car car;
 
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private String startTime;
+    private String endTime;
     private String customerName;
 
     /**
@@ -31,7 +29,7 @@ public class Booking {
      * @param startTime The start date of the booking
      * @param endTime The end date of the booking
      */
-    public Booking(Car car, LocalDateTime startTime, LocalDateTime endTime, String customerName) {
+    public Booking(Car car, String startTime, String endTime, String customerName) {
         this.car = car;
         this.customerName = customerName;
         this.startTime = startTime;
@@ -90,7 +88,7 @@ public class Booking {
      * Get the start date of the booking
      * @return The start date of the booking
      */
-    public LocalDateTime getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
@@ -98,7 +96,7 @@ public class Booking {
      * Set the start date of the booking
      * @param startTime The start date of the booking
      */
-    public void setStartTime(LocalDateTime startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
@@ -106,7 +104,7 @@ public class Booking {
      * Get the end date of the booking
      * @return The end date of the booking
      */
-    public LocalDateTime getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
@@ -114,7 +112,7 @@ public class Booking {
      * Set the end date of the booking
      * @param endTime The end date of the booking
      */
-    public void setEndTime(LocalDateTime endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
 
@@ -124,6 +122,14 @@ public class Booking {
      */
     public String findByCustomerName(String customerName){
         return customerName;
+    }
+
+    /**
+     * Get the booking
+     * @return The Booking
+     */
+    public Booking getBooking(){
+        return this;
     }
 
     @Override

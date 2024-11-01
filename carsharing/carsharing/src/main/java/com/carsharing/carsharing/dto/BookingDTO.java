@@ -7,4 +7,6 @@ public class BookingDTO {
     private String customerName;
     private LocalDate startTime;
     private LocalDate endTime;
+
+    //TODO: add getters and settes
 }

@@ -41,13 +41,10 @@ import java.util.List;
         }
 
         public void deleteCar(Long id) {
-            Optional<Car> optionalCar = carRepository.findById(id);
-            if (optionalCar.isPresent()) {
-                carRepository.delete(optionalCar.get());
-                System.out.println("Car deleted: " + optionalCar.get());
-            } else {
-                throw new EntityNotFoundException("Car not found");
+            if (!carRepository.existsById(id)) {
+                throw new ResourceNotFoundException("Car not found with id: " + id);
             }
+            carRepository.deleteById(id);
         }
 
         public Car addCar(Car car) {return carRepository.save(car);}
@@ -57,8 +54,6 @@ import java.util.List;
             return cars.stream()
                     .map(CarMapper.INSTANCE::toDTO) // Entity -> DTO
                     .collect(Collectors.toList());
-
-
         }
 
         public CarDTO  getCarByIdDTO(Long id) {

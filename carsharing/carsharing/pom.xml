@@ -66,24 +66,40 @@
 			<scope>provided</scope> <!-- Nur zur Compile-Zeit nötig -->
 		</dependency>
 
+		<!-- GraphQL Spring Boot Starter -->
 		<dependency>
 			<groupId>com.graphql-java-kickstart</groupId>
 			<artifactId>graphql-spring-boot-starter</artifactId>
-			<version>13.0.0</version> <!-- Überprüfe auf die neueste Version -->
+			<version>13.0.0</version>
 		</dependency>
 
+		<!-- PostgreSQL Driver für Runtime -->
 		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<version>2.2.224</version>
-			<scope>compile</scope>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- Testcontainers für PostgreSQL -->
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>testcontainers</artifactId>
+			<version>1.18.3</version>
+			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.testcontainers</groupId>
-			<artifactId>testcontainers</artifactId>
-			<version>1.18.3</version> <!-- Überprüfe die neueste Version -->
+			<artifactId>postgresql</artifactId>
+			<version>1.18.3</version>
 			<scope>test</scope>
+		</dependency>
+
+		<!-- H2 Datenbank für Tests (optional, nur wenn benötigt) -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>test</scope> <!-- Scope auf test setzen, wenn nur für Tests verwendet -->
 		</dependency>
 
 	</dependencies>

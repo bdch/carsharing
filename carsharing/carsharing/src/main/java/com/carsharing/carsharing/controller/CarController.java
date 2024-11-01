@@ -30,8 +30,12 @@ public class CarController{
 
     //Get car by id
     @GetMapping("/{id}")
-    public Car getCarById(@PathVariable Long id){
-        return carService.getCarById(id);
+    public ResponseEntity<Car> getCarById(@PathVariable Long id){
+        Car car = carService.getCarById(id);
+        if (car == null) {
+            return ResponseEntity.notFound().build(); // 404 if car not found
+        }
+        return ResponseEntity.ok(car);
     }
 
     //add a new car
@@ -60,11 +64,13 @@ public class CarController{
     //delete a car by id
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCar(@PathVariable Long id){
-        try {
-            carService.deleteCar(id);
-            return ResponseEntity.noContent().build(); // 204 No Content
-        } catch (EntityNotFoundException e) {
+        if(carService.getCarById(id) == null) {
             return ResponseEntity.notFound().build(); // 404 Not Found
         }
+        carService.deleteCar(id);
+        return ResponseEntity.noContent().build(); // 204 after successful deletion
     }
+
+
+
 }
