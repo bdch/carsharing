@@ -1,6 +1,8 @@
 package com.carsharing.carsharing.controller;
 
 
+import com.carsharing.carsharing.Mapper.BookingMapper;
+import com.carsharing.carsharing.dto.BookingDTO;
 import com.carsharing.carsharing.model.Booking;
 import com.carsharing.carsharing.repository.BookingRepository;
 import com.carsharing.carsharing.service.BookingService;
@@ -9,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/bookings")
@@ -22,56 +25,44 @@ public class BookingController {
 
     //Get all bookings
     @GetMapping
-    public List<Booking> getAllBookings(){
-       return bookingRepository.findAll();
+    public List<BookingDTO> getAllBookings() {
+        return bookingService.getAllBookingsDTO();
     }
 
-    //Get booking by id
+    // Buchung nach ID als DTO zurückgeben
     @GetMapping("/{id}")
-    public ResponseEntity<Booking> getBookingById(@PathVariable Long id){
-       return bookingRepository.findById(id)
-               .map(ResponseEntity::ok)
-               .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<BookingDTO> getBookingById(@PathVariable Long id) {
+        return ResponseEntity.ok(bookingService.getBookingsByIdDTO(id));
     }
 
-    //Get booking by customer name
+    // Buchung nach Kundenname
     @GetMapping("/customer/{customerName}")
-    public List<Booking> getBookingByCustomerName(@PathVariable String customerName){
-        return bookingService.getBookingByCustomerName(customerName);
+    public List<BookingDTO> getBookingByCustomerName(@PathVariable String customerName) {
+        return bookingService.getBookingByCustomerName(customerName)
+                .stream()
+                .map(booking -> BookingMapper.INSTANCE.bookingToBookingDTO(booking)) // Entity -> DTO
+                .collect(Collectors.toList());
     }
 
-    //add a new booking
+    // Neue Buchung mit DTO anlegen
     @PostMapping
-    public ResponseEntity<Booking> addBooking(@RequestBody Booking booking){
-        Booking createdBooking = bookingService.addBooking(booking);
-        return ResponseEntity.status(201).body(createdBooking);
+    public ResponseEntity<BookingDTO> addBooking(@RequestBody BookingDTO bookingDTO) {
+        BookingDTO createdBookingDTO = bookingService.saveBookingDTO(bookingDTO);
+        return ResponseEntity.status(201).body(createdBookingDTO);
     }
 
-    //update a booking id
+    // Buchung aktualisieren mit DTO
     @PutMapping("/{id}")
-    public ResponseEntity<Booking> updateBooking(@PathVariable Long id, @RequestBody Booking bookingDetails){
-        Booking booking = bookingService.getBookingById(id);
-        if (booking == null) {
-            return ResponseEntity.notFound().build(); // 404 Not Found
-        }
-            booking.setCar(bookingDetails.getCar());
-            booking.setStartTime(bookingDetails.getStartTime());
-            booking.setEndTime(bookingDetails.getEndTime());
-            booking.setCustomerName(bookingDetails.getCustomerName());
-            Booking updatedBooking = bookingService.saveBooking(booking);
-            return ResponseEntity.ok(updatedBooking);
+    public ResponseEntity<BookingDTO> updateBooking(@PathVariable Long id, @RequestBody BookingDTO bookingDetails) {
+        BookingDTO updatedBookingDTO = bookingService.saveBookingDTO(bookingDetails);
+        return ResponseEntity.ok(updatedBookingDTO);
     }
 
-    //delete a booking by id
+    // Buchung löschen
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBooking(@PathVariable Long id){
-        if(bookingService.getBookingById(id) !=null) {
-            bookingService.deleteBooking(id);
-            return ResponseEntity.noContent().build(); //204 No Content
-        }
-        return ResponseEntity.notFound().build(); //404 Not Found
+    public ResponseEntity<Void> deleteBooking(@PathVariable Long id) {
+        bookingService.deleteBookingDTO(id);
+        return ResponseEntity.noContent().build(); // 204 No Content
     }
-
-
 
 }

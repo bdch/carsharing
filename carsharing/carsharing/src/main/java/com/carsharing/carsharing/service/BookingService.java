@@ -50,25 +50,29 @@ public class BookingService {
     public List<BookingDTO> getAllBookingsDTO() {
         List<Booking> bookings = bookingRepository.findAll();
         return bookings.stream()
-                .map(BookingMapper.INSTANCE::toDTO) // Entity -> DTO
+                .map(BookingMapper.INSTANCE::bookingToBookingDTO) // Entity -> DTO
                 .collect(Collectors.toList());
     }
 
     public BookingDTO getBookingsByIdDTO(Long id) {
-        Booking booking = bookingRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Booking not found with id: " + id));
-        return BookingMapper.INSTANCE.toDTO(booking);
+        Booking booking = bookingRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Booking not found with id: " + id));
+        return BookingMapper.INSTANCE.bookingToBookingDTO(booking);
     }
 
+    // Entgegennahme eines BookingDTOs und Rückgabe als DTO
     public BookingDTO saveBookingDTO(BookingDTO bookingDTO) {
-        Booking booking = BookingMapper.INSTANCE.toEntity(bookingDTO);
+        Booking booking = BookingMapper.INSTANCE.bookingDTOToBooking(bookingDTO);
         Booking savedBooking = bookingRepository.save(booking);
-        return BookingMapper.INSTANCE.toDTO(savedBooking);
+        return BookingMapper.INSTANCE.bookingToBookingDTO(savedBooking);
     }
 
-   public void deleteBookingDTO(Long id) {
+    // Löschen eines Buchungsobjekts durch DTO
+    public void deleteBookingDTO(Long id) {
+        if (!bookingRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Booking not found with id: " + id);
+        }
         bookingRepository.deleteById(id);
-   }
-
-
+    }
 
 }
