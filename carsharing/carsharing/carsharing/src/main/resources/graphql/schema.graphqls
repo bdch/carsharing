@@ -1,0 +1,43 @@
+type Query {
+    allCars: [CarDTO]
+    carById(id: ID!): CarDTO
+    allBookings: [BookingDTO]
+    bookingById(id: ID!): BookingDTO
+}
+
+type Mutation {
+    addCar(carInput: CarInput): CarDTO
+    saveCar(carInput: CarInput): CarDTO
+    deleteCar(id: ID!): Boolean
+    addBooking(bookingInput: BookingInput): BookingDTO
+    saveBooking(bookingInput: BookingInput): BookingDTO
+    deleteBooking(id: ID!): Boolean
+}
+
+type CarDTO {
+    id: ID
+    model: String
+    brand: String
+    year: Int
+}
+
+type BookingDTO {
+    id: ID
+    customerName: String
+    carId: ID
+    bookingDate: String
+}
+
+# Input Types
+input CarInput {
+    model: String
+    brand: String
+    year: Int
+}
+
+input BookingInput {
+    customerName: String
+    carId: ID
+    bookingDate: String
+}
+

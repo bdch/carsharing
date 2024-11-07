@@ -1,0 +1,72 @@
+-------------------------------------------------------------------------------
+Test set: com.carsharing.carsharing.CarsharingApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 7, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 13.56 s <<< FAILURE! -- in com.carsharing.carsharing.CarsharingApplicationTests
+com.carsharing.carsharing.CarsharingApplicationTests.testGetBookingById -- Time elapsed: 2.470 s <<< ERROR!
+org.springframework.web.client.RestClientException: Error while extracting response for type [class com.carsharing.carsharing.model.Booking] and content type [application/json]
+	at org.springframework.web.client.HttpMessageConverterExtractor.extractData(HttpMessageConverterExtractor.java:119)
+	at org.springframework.web.client.RestTemplate$ResponseEntityResponseExtractor.extractData(RestTemplate.java:1159)
+	at org.springframework.web.client.RestTemplate$ResponseEntityResponseExtractor.extractData(RestTemplate.java:1142)
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:892)
+	at org.springframework.web.client.RestTemplate.execute(RestTemplate.java:790)
+	at org.springframework.web.client.RestTemplate.getForEntity(RestTemplate.java:431)
+	at org.springframework.boot.test.web.client.TestRestTemplate.getForEntity(TestRestTemplate.java:244)
+	at com.carsharing.carsharing.CarsharingApplicationTests.testGetBookingById(CarsharingApplicationTests.java:229)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+Caused by: org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error: Unrecognized token 'Type': was expecting (JSON String, Number, Array, Object or token 'null', 'true' or 'false')
+	at org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter.readJavaType(AbstractJackson2HttpMessageConverter.java:406)
+	at org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter.read(AbstractJackson2HttpMessageConverter.java:354)
+	at org.springframework.web.client.HttpMessageConverterExtractor.extractData(HttpMessageConverterExtractor.java:104)
+	... 10 more
+Caused by: com.fasterxml.jackson.core.JsonParseException: Unrecognized token 'Type': was expecting (JSON String, Number, Array, Object or token 'null', 'true' or 'false')
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); line: 1, column: 6]
+	at com.fasterxml.jackson.core.JsonParser._constructError(JsonParser.java:2572)
+	at com.fasterxml.jackson.core.JsonParser._constructReadException(JsonParser.java:2598)
+	at com.fasterxml.jackson.core.JsonParser._constructReadException(JsonParser.java:2606)
+	at com.fasterxml.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:765)
+	at com.fasterxml.jackson.core.json.UTF8StreamJsonParser._reportInvalidToken(UTF8StreamJsonParser.java:3659)
+	at com.fasterxml.jackson.core.json.UTF8StreamJsonParser._handleUnexpectedValue(UTF8StreamJsonParser.java:2747)
+	at com.fasterxml.jackson.core.json.UTF8StreamJsonParser._nextTokenNotInObject(UTF8StreamJsonParser.java:867)
+	at com.fasterxml.jackson.core.json.UTF8StreamJsonParser.nextToken(UTF8StreamJsonParser.java:753)
+	at com.fasterxml.jackson.databind.ObjectReader._initForReading(ObjectReader.java:357)
+	at com.fasterxml.jackson.databind.ObjectReader._bindAndClose(ObjectReader.java:2115)
+	at com.fasterxml.jackson.databind.ObjectReader.readValue(ObjectReader.java:1501)
+	at org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter.readJavaType(AbstractJackson2HttpMessageConverter.java:395)
+	... 12 more
+
+com.carsharing.carsharing.CarsharingApplicationTests.testGetAllBookings -- Time elapsed: 0.050 s <<< ERROR!
+org.springframework.web.client.RestClientException: Error while extracting response for type [java.util.List<com.carsharing.carsharing.model.Booking>] and content type [application/json]
+	at org.springframework.web.client.HttpMessageConverterExtractor.extractData(HttpMessageConverterExtractor.java:119)
+	at org.springframework.web.client.RestTemplate$ResponseEntityResponseExtractor.extractData(RestTemplate.java:1159)
+	at org.springframework.web.client.RestTemplate$ResponseEntityResponseExtractor.extractData(RestTemplate.java:1142)
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:892)
+	at org.springframework.web.client.RestTemplate.execute(RestTemplate.java:790)
+	at org.springframework.web.client.RestTemplate.exchange(RestTemplate.java:701)
+	at org.springframework.boot.test.web.client.TestRestTemplate.exchange(TestRestTemplate.java:774)
+	at com.carsharing.carsharing.CarsharingApplicationTests.testGetAllBookings(CarsharingApplicationTests.java:202)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+Caused by: org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error: Unrecognized token 'Type': was expecting (JSON String, Number, Array, Object or token 'null', 'true' or 'false')
+	at org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter.readJavaType(AbstractJackson2HttpMessageConverter.java:406)
+	at org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter.read(AbstractJackson2HttpMessageConverter.java:354)
+	at org.springframework.web.client.HttpMessageConverterExtractor.extractData(HttpMessageConverterExtractor.java:104)
+	... 10 more
+Caused by: com.fasterxml.jackson.core.JsonParseException: Unrecognized token 'Type': was expecting (JSON String, Number, Array, Object or token 'null', 'true' or 'false')
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); line: 1, column: 6]
+	at com.fasterxml.jackson.core.JsonParser._constructError(JsonParser.java:2572)
+	at com.fasterxml.jackson.core.JsonParser._constructReadException(JsonParser.java:2598)
+	at com.fasterxml.jackson.core.JsonParser._constructReadException(JsonParser.java:2606)
+	at com.fasterxml.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:765)
+	at com.fasterxml.jackson.core.json.UTF8StreamJsonParser._reportInvalidToken(UTF8StreamJsonParser.java:3659)
+	at com.fasterxml.jackson.core.json.UTF8StreamJsonParser._handleUnexpectedValue(UTF8StreamJsonParser.java:2747)
+	at com.fasterxml.jackson.core.json.UTF8StreamJsonParser._nextTokenNotInObject(UTF8StreamJsonParser.java:867)
+	at com.fasterxml.jackson.core.json.UTF8StreamJsonParser.nextToken(UTF8StreamJsonParser.java:753)
+	at com.fasterxml.jackson.databind.ObjectReader._initForReading(ObjectReader.java:357)
+	at com.fasterxml.jackson.databind.ObjectReader._bindAndClose(ObjectReader.java:2115)
+	at com.fasterxml.jackson.databind.ObjectReader.readValue(ObjectReader.java:1501)
+	at org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter.readJavaType(AbstractJackson2HttpMessageConverter.java:395)
+	... 12 more
+
