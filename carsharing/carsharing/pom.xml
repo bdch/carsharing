@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -13,26 +13,14 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>carsharing</name>
 	<description>A demo project for a car sharing application</description>
-	<url/>
-	<licenses>
-		<license/>
-	</licenses>
-	<developers>
-		<developer/>
-	</developers>
-	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
-	</scm>
 	<properties>
 		<java.version>17</java.version>
 		<maven.compiler.source>17</maven.compiler.source> <!-- Java-Quellversion -->
 		<maven.compiler.target>17</maven.compiler.target> <!-- Java-Zielversion -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<dependencies>
-		<!-- Spring Boot Starter for WebApp-->
+		<!-- Spring Boot Starter für WebApp-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -46,10 +34,17 @@
 		</dependency>
 
 		<!-- Spring Boot Starter für JPA (Datenbankzugriff) -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
+		<!-- MySQL JDBC-Treiber -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.32</version> <!-- Diese Version könnte variieren -->
+		</dependency>
 
 		<!-- MapStruct Abhängigkeit -->
 		<dependency>
@@ -63,7 +58,7 @@
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct-processor</artifactId>
 			<version>1.5.3.Final</version>
-			<scope>provided</scope> <!-- Nur zur Compile-Zeit nötig -->
+			<scope>compile</scope> <!-- Nur zur Compile-Zeit nötig -->
 		</dependency>
 
 		<!-- GraphQL Spring Boot Starter -->
@@ -73,21 +68,6 @@
 			<version>13.0.0</version>
 		</dependency>
 
-		<!-- PostgreSQL Driver für Runtime -->
-		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-
-		<!-- Testcontainers für PostgreSQL -->
-		<dependency>
-			<groupId>org.testcontainers</groupId>
-			<artifactId>testcontainers</artifactId>
-			<version>1.18.3</version>
-			<scope>test</scope>
-		</dependency>
-
 		<dependency>
 			<groupId>org.testcontainers</groupId>
 			<artifactId>postgresql</artifactId>
@@ -95,12 +75,6 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- H2 Datenbank für Tests (optional, nur wenn benötigt) -->
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>test</scope> <!-- Scope auf test setzen, wenn nur für Tests verwendet -->
-		</dependency>
 
 	</dependencies>
 	<build>

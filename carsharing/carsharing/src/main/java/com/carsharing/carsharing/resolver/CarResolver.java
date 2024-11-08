@@ -24,12 +24,10 @@ public class CarResolver implements GraphQLQueryResolver {
         return carService.getCarByIdDTO(id);
     }
 
-    // Resolver
     public CarDTO addCar(CarDTO carDTO) {
         return carService.saveCarDTO(carDTO);
     }
 
-    // Resolver
     public Boolean deleteCar(Long id) {
         carService.deleteCarDTO(id);
         return true;

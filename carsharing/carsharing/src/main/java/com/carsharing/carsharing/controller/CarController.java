@@ -1,5 +1,6 @@
 package com.carsharing.carsharing.controller;
 
+import com.carsharing.carsharing.dto.CarDTO;
 import com.carsharing.carsharing.repository.CarRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -16,61 +17,45 @@ import java.util.List;
 @RequestMapping("/api/v1/cars")
 public class CarController{
 
+    private final CarService carService;
 
+    // Konstruktorinjektion
     @Autowired
-    public CarService carService;
+    public CarController(CarService carService) {
+        this.carService = carService;
+    }
 
     //Get all cars
     @GetMapping
-    public List<Car> getAllCars(){
-        List<Car> cars = carService.getAllCars();
-        System.out.println("Cars: " + cars); // Logging der Antwort
-        return cars;
+    public List<CarDTO> getAllCars() {
+        return carService.getAllCarsDTO();
     }
 
-    //Get car by id
+    // Auto nach ID als DTO zurückgeben
     @GetMapping("/{id}")
-    public ResponseEntity<Car> getCarById(@PathVariable Long id){
-        Car car = carService.getCarById(id);
-        if (car == null) {
-            return ResponseEntity.notFound().build(); // 404 if car not found
-        }
-        return ResponseEntity.ok(car);
+    public ResponseEntity<CarDTO> getCarById(@PathVariable Long id) {
+        return ResponseEntity.ok(carService.getCarByIdDTO(id));
     }
 
-    //add a new car
+    // Neues Auto anlegen
     @PostMapping
-    public ResponseEntity<Car> addCar(@RequestBody Car car){
-        Car savedCar = carService.addCar(car);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedCar);
+    public ResponseEntity<CarDTO> addCar(@RequestBody CarDTO carDTO) {
+        CarDTO createdCarDTO = carService.saveCarDTO(carDTO);
+        return ResponseEntity.status(201).body(createdCarDTO);
     }
 
-    //update a car id
+    // Auto aktualisieren
     @PutMapping("/{id}")
-    public ResponseEntity<Car> updateCar(@PathVariable Long id, @RequestBody Car carDetails){
-        Car car = carService.getCarById(id);
-        if(car != null) {
-            car.setBrand(carDetails.getBrand());
-            car.setModel(carDetails.getModel());
-            car.setLicensePlate(carDetails.getLicensePlate());
-
-            // Speichern und Rückgabe des aktualisierten Autos
-            Car updatedCar = carService.saveCar(car);
-            return ResponseEntity.ok(updatedCar); // Gibt 200 OK zurück
-        }
-        return ResponseEntity.notFound().build(); // Gibt 404 Not Found zurück
+    public ResponseEntity<CarDTO> updateCar(@PathVariable Long id, @RequestBody CarDTO carDetails) {
+        CarDTO updatedCarDTO = carService.saveCarDTO(carDetails);
+        return ResponseEntity.ok(updatedCarDTO);
     }
 
-    //delete a car by id
+    // Auto löschen
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCar(@PathVariable Long id){
-        if(carService.getCarById(id) == null) {
-            return ResponseEntity.notFound().build(); // 404 Not Found
-        }
-        carService.deleteCar(id);
-        return ResponseEntity.noContent().build(); // 204 after successful deletion
+    public ResponseEntity<Void> deleteCar(@PathVariable Long id) {
+        carService.deleteCarDTO(id);
+        return ResponseEntity.noContent().build(); // 204 No Content
     }
-
-
 
 }

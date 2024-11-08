@@ -2,6 +2,7 @@ package com.carsharing.carsharing.model;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "bookings")
 public class Booking {
 
     @Id
