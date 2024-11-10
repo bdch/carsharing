@@ -9,8 +9,8 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "car_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "car_id")
     private Car car;
 
     private String startTime;
@@ -142,5 +142,13 @@ public class Booking {
                 ", endTime=" + endTime +
                 ", customerName='" + customerName + '\'' +
                 '}';
+    }
+
+    // Setzt carId als Long-Wert
+    public void setCarId(Long carId) {
+        if (carId != null) {
+            this.car = new Car();  // Instanziiere ein neues Car-Objekt
+            this.car.setId(carId); // Setze die ID des Fahrzeugs
+        }
     }
 }

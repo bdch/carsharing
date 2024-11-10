@@ -13,13 +13,15 @@ public interface BookingMapper {
     BookingMapper INSTANCE = Mappers.getMapper(BookingMapper.class);
 
     // Entität zu DTO
-    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "id", source = "id") // Jetzt wird die ID korrekt gemappt
+    @Mapping(target = "carId", source = "car.id") // carId kommt aus car.id im Booking-Objekt
     BookingDTO bookingToBookingDTO(Booking booking);
 
+    // DTO zu Entität
     @Mapping(target = "car", source = "carId") // car kommt von carId im DTO
-    @Mapping(target = "customerName", source = "customerName") // customerName aus DTO
-    @Mapping(target = "startTime", source = "startTime") // startTime aus DTO
-    @Mapping(target = "endTime", source = "endTime") // endTime aus DTO
+    @Mapping(target = "customerName", source = "customerName")
+    @Mapping(target = "startTime", source = "startTime")
+    @Mapping(target = "endTime", source = "endTime")
     Booking bookingDTOToBooking(BookingDTO bookingDTO);
 
     // Hilfsmethode, um die carId in ein Car-Objekt zu konvertieren

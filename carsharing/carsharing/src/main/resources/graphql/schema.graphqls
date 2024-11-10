@@ -18,8 +18,9 @@ type CarDTO {
     id: ID
     model: String
     brand: String
-    year: Int
+    licensePlate: String
 }
+
 
 type BookingDTO {
     id: ID
@@ -32,7 +33,7 @@ type BookingDTO {
 input CarInput {
     model: String
     brand: String
-    year: Int
+    licensePlate: String
 }
 
 input BookingInput {

@@ -1,12 +1,18 @@
 package com.carsharing.carsharing.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class BookingDTO {
 
     private Long id;
+
     private Long carId;
+
+    private CarDTO car;
     private String customerName;
     private String startTime;
     private String endTime;
+
 
     public BookingDTO() {}
 
@@ -18,6 +24,13 @@ public class BookingDTO {
         this.customerName = customerName;
     }
 
+    public CarDTO getCar() {
+        return car;
+    }
+
+    public void setCar(CarDTO car) {
+        this.car = car;
+    }
 
     public String getCustomerName() {
         return customerName;
