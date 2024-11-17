@@ -1,35 +1,64 @@
+# Der Query-Typ definiert, welche Daten wir abfragen können.
+
 type Query {
+
     allCars: [CarDTO]
+    # Abfrage für ein spezifisches Auto anhand seiner ID.
+    # "ID!" bedeutet, dass die ID erforderlich ist (kann nicht null sein).
     carById(id: ID!): CarDTO
     allBookings: [BookingDTO]
     bookingById(id: ID!): BookingDTO
+
 }
 
+# Der Mutation-Typ definiert Operationen, die Daten verändern.
+# Mutationen sind im Gegensatz zu Queries nicht nur lesend, sondern verändern den Zustand der Datenbank.
 type Mutation {
+
+    # Fügt ein neues Auto hinzu. Nimmt als Eingabe ein CarInput-Objekt und gibt das erstellte CarDTO zurück.
     addCar(carInput: CarInput): CarDTO
+
+    # Speichert ein Auto (fügt es hinzu oder aktualisiert es, abhängig von der Logik auf dem Server).
+    # Auch hier wird ein CarInput erwartet und das resultierende CarDTO zurückgegeben.
     saveCar(carInput: CarInput): CarDTO
+
+    # Löscht ein Auto anhand seiner ID. Gibt einen Boolean zurück, der anzeigt, ob das Löschen erfolgreich war.
     deleteCar(id: ID!): Boolean
     addBooking(bookingInput: BookingInput): BookingDTO
     saveBooking(bookingInput: BookingInput): BookingDTO
     deleteBooking(id: ID!): Boolean
+
 }
 
+# Der CarDTO-Typ beschreibt, wie die Daten eines Autos aussehen.
 type CarDTO {
+
+    # Die eindeutige ID des Autos.
     id: ID
+
+    # Das Modell des Autos (z. B. "A4", "Golf").
     model: String
+
+    # Die Marke des Autos (z. B. "Audi", "Volkswagen").
     brand: String
+
+    # Das Kennzeichen des Autos (z. B. "M-AB 1234").
     licensePlate: String
+
 }
 
 
 type BookingDTO {
+
     id: ID
     customerName: String
     carId: ID
     bookingDate: String
+
 }
 
-# Input Types
+# Input-Typen werden verwendet, um Daten an den Server zu senden (z. B. bei Mutationen).
+# Der CarInput-Typ wird für das Hinzufügen oder Aktualisieren eines Autos verwendet.
 input CarInput {
     model: String
     brand: String
