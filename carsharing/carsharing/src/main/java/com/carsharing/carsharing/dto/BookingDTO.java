@@ -1,7 +1,8 @@
 package com.carsharing.carsharing.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
+// Die Klasse BookingDTO repräsentiert eine Datenübertragungsstruktur (Data Transfer Object)
+// für Buchungen im Carsharing-System. Sie dient dazu, Daten zwischen der API und dem Client
+// in einer leicht verständlichen und flachen Struktur zu übertragen.
 public class BookingDTO {
 
     private Long id;
@@ -14,8 +15,12 @@ public class BookingDTO {
     private String endTime;
 
 
+    // **Standardkonstruktor**: Erforderlich für Frameworks wie Spring oder Hibernate,
+    // da sie Objekte oft mit einem leeren Konstruktor erstellen.
     public BookingDTO() {}
 
+    // **Konstruktor mit Parametern**: Ermöglicht die direkte Initialisierung eines
+    // BookingDTO-Objekts mit allen wichtigen Eigenschaften.
     public BookingDTO(Long id, Long carId, String startTime, String endTime, String customerName) {
         this.id = id;
         this.carId = carId;
@@ -23,6 +28,10 @@ public class BookingDTO {
         this.endTime = endTime;
         this.customerName = customerName;
     }
+
+    // Getter und Setter: Methoden, die den Zugriff auf private Felder ermöglichen.
+    // Getter gibt den aktuellen Wert eines Feldes zurück.
+    // Setter aktualisiert den Wert eines Feldes.
 
     public CarDTO getCar() {
         return car;

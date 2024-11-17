@@ -1,14 +1,18 @@
 package com.carsharing.carsharing.model;
 import jakarta.persistence.*;
 
+// **Annotationen für die Datenbank-Mapping-Konfiguration**
+// markiert diese Klasse als eine Entität, die einer Datenbanktabelle entspricht.
 @Entity
 @Table(name = "bookings")
 public class Booking {
 
+    // **Primärschlüssel**
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // **Beziehung zwischen Booking und Car**
     @ManyToOne
     @JoinColumn(name = "car_id")
     private Car car;

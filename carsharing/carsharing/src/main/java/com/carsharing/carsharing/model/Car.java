@@ -6,17 +6,26 @@ import java.util.ArrayList;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Entity
-    @Table(name = "cars")
+    // **Annotationen für Datenbank-Mapping und Entitätserstellung**
+    @Entity // Kennzeichnet die Klasse als eine JPA-Entität, die einer Datenbanktabelle entspricht.
+    @Table(name = "cars") // Gibt an, dass diese Entität mit der Tabelle "cars" in der Datenbank verknüpft ist.
     public class Car {
 
+        // **Primärschlüssel**
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY) //set the id to be generated automatically
         private Long id;
 
+        // **Beziehung zu Booking**
         @OneToMany(mappedBy = "car", cascade = CascadeType.ALL, orphanRemoval = true)
+        // Eine 1:n-Beziehung (ein Auto kann mehrere Buchungen haben).
+        // `mappedBy = "car"`: Das Feld `car` in der Klasse `Booking` definiert die Beziehung.
         @JsonIgnore
+        // Verhindert, dass die Liste der Buchungen (`bookings`) in der JSON-Ausgabe enthalten ist.
         private List<Booking> bookings = new ArrayList<>();
+        // Initialisiert eine leere Liste von Buchungen, um NullPointerExceptions zu vermeiden.
+        // Die Liste wird nur verwendet, um Buchungen zu speichern, die in der Datenbank gespeichert werden.
+
 
 
         private String brand;

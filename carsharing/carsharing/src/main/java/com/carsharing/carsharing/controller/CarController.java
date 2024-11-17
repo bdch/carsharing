@@ -19,7 +19,8 @@ public class CarController{
 
     private final CarService carService;
 
-    // Konstruktorinjektion
+    // Konstruktorinjektion: Ein Ansatz, um Abhängigkeiten (Dependencies) zu injizieren.
+    // Konstruktorinjektion ist sicherer als Feldinjektion (@Autowired auf einem Feld).
     @Autowired
     public CarController(CarService carService) {
         this.carService = carService;
@@ -28,13 +29,17 @@ public class CarController{
     //Get all cars
     @GetMapping
     public List<CarDTO> getAllCars() {
+        // Ruft alle Autos als DTOs (Data Transfer Objects) ab.
+        // DTOs enthalten nur die für den Client relevanten Daten.
         return carService.getAllCarsDTO();
     }
 
     // Auto nach ID als DTO zurückgeben
     @GetMapping("/{id}")
     public ResponseEntity<CarDTO> getCarById(@PathVariable Long id) {
+        // @PathVariable bindet den Wert der URL (z. B. /cars/1) an die id-Variable.
         return ResponseEntity.ok(carService.getCarByIdDTO(id));
+        // Die Antwort enthält den Statuscode 200 OK und das Auto-DTO.
     }
 
     // Neues Auto anlegen
